@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Catálogo Sandvik Coromant · Hailtools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+<style>
+:root{
+  --page:#F7F7F5;--card:#FFFFFF;--line:#E4E4E0;--ink:#1E1E1C;--ink-2:#6B6B66;--grafite:#3C3C3B;
+  --amarelo:#FFCC1B;--on-amarelo:#3D2E00;--tint:#EFEFEC;--ok:#2E7D32;--warn:#B26A00;--crit:#B3261E;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --page:#161615;--card:#1F1F1D;--line:#33332F;--ink:#F2F2EF;--ink-2:#A8A8A2;--grafite:#D6D6D0;--tint:#2A2A27;
+  --ok:#7BC47F;--warn:#E0A64A;--crit:#F28B82;color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --page:#161615;--card:#1F1F1D;--line:#33332F;--ink:#F2F2EF;--ink-2:#A8A8A2;--grafite:#D6D6D0;--tint:#2A2A27;
+  --ok:#7BC47F;--warn:#E0A64A;--crit:#F28B82;color-scheme:dark;}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--page);color:var(--ink);font:400 15px/1.5 Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input{font:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:16px}
+h1,h2,h3{margin:0;font-weight:500;text-wrap:balance}
+h1{font-size:26px;line-height:1.2}
+h2{font-size:18px}
+h3{font-size:15px}
+.eyebrow{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-weight:500}
+.muted{color:var(--ink-2)}
+.mono{font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.hidden{display:none!important}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--page);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:16px;min-height:60px;flex-wrap:wrap;padding-block:10px}
+.brand{display:flex;flex-direction:column;line-height:1.1;cursor:pointer;flex:0 0 auto}
+.brand b{font-weight:500;font-size:17px}
+.brand span{font-size:12px;color:var(--ink-2)}
+.search{flex:1 1 320px;display:flex;gap:8px}
+.search input{flex:1;min-width:0;height:44px;padding:0 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);outline:none}
+.search input:focus{border-color:var(--grafite)}
+.search button{height:44px;padding:0 16px;border-radius:8px;background:var(--grafite);color:var(--page);font-weight:500}
+.search button:focus-visible,.btn:focus-visible,.chip:focus-visible,.fam:focus-visible{outline:2px solid var(--grafite);outline-offset:2px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 18px;border-radius:8px;border:1px solid var(--grafite);font-weight:500;text-decoration:none;white-space:nowrap}
+.btn.primary{background:var(--amarelo);color:var(--on-amarelo);border-color:var(--amarelo)}
+.btn.small{height:36px;padding:0 12px;font-size:14px}
+.btn:disabled{opacity:.5;cursor:default}
+
+/* home */
+.hero{padding-block:36px 8px}
+.hero p{max-width:60ch;margin:8px 0 0}
+.fams{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:20px}
+.fam{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:left;display:flex;flex-direction:column;gap:4px;min-height:96px}
+.fam b{font-weight:500}
+.fam .n{color:var(--ink-2);font-size:13px}
+.fam:hover{border-color:var(--grafite)}
+.examples{margin-top:28px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.examples .chip{cursor:pointer}
+.note{margin-top:32px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;color:var(--ink-2);font-size:13px;background:var(--card)}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:13px;color:var(--ink);white-space:nowrap}
+.chip.on{background:var(--grafite);color:var(--page);border-color:var(--grafite)}
+.chip .cnt{color:var(--ink-2);font-size:12px}
+.chip.on .cnt{color:inherit;opacity:.8}
+.tag{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:500;background:var(--tint);color:var(--ink-2)}
+.tag.price{color:var(--on-amarelo);background:var(--amarelo)}
+.tag.warn{color:var(--warn)}
+.tag.crit{color:var(--crit)}
+.tag.ok{color:var(--ok)}
+
+/* results */
+.results{display:grid;grid-template-columns:260px 1fr;gap:24px;padding-block:20px 48px}
+@media (max-width:820px){.results{grid-template-columns:1fr}}
+.filters{display:flex;flex-direction:column;gap:18px}
+.fgroup{display:flex;flex-direction:column;gap:8px}
+#facets{display:flex;flex-direction:column;gap:18px}
+.fgroup .chips{display:flex;flex-wrap:wrap;gap:6px}
+.summary{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.list{display:flex;flex-direction:column;gap:10px}
+.item{display:grid;grid-template-columns:88px 1fr;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;text-decoration:none;color:inherit}
+.item:hover{border-color:var(--grafite)}
+.thumb{width:88px;height:88px;border-radius:8px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:contain}
+.thumb.empty{color:var(--ink-2);font-size:11px;text-align:center;padding:6px}
+.item .code{font-weight:500;font-size:16px}
+.item .desc{color:var(--ink-2);font-size:14px}
+.item .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.pager{display:flex;gap:8px;justify-content:center;margin-top:18px}
+.active-filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+
+/* product */
+.crumbs{padding-block:16px 0;font-size:13px;color:var(--ink-2);display:flex;gap:6px;flex-wrap:wrap}
+.crumbs a{text-decoration:none}
+.product{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:28px;padding-block:14px 56px}
+@media (max-width:820px){.product{grid-template-columns:1fr}}
+.gallery{display:flex;flex-direction:column;gap:8px}
+.gallery .main{aspect-ratio:1;max-width:100%;background:#fff;border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.gallery .main img{width:100%;height:100%;object-fit:contain}
+.gallery .thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.gallery .thumbs button{width:64px;height:64px;border:1px solid var(--line);border-radius:8px;background:#fff;overflow:hidden;padding:0}
+.gallery .thumbs button.on{border-color:var(--grafite)}
+.gallery .thumbs img{width:100%;height:100%;object-fit:contain}
+.gallery .cap{font-size:12px;color:var(--ink-2)}
+.pinfo{display:flex;flex-direction:column;gap:20px}
+.ptitle .tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.cta .stock{font-size:13px;color:var(--ink-2)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}
+@media (max-width:480px){.kv{grid-template-columns:1fr}}
+.kv div{display:flex;flex-direction:column;border-bottom:1px solid var(--line);padding-bottom:6px}
+.kv dt{font-size:12px;color:var(--ink-2)}
+.kv dd{margin:0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-weight:500;color:var(--ink-2);font-size:12px;padding:6px 8px 6px 0;border-bottom:1px solid var(--line)}
+td{padding:7px 8px 7px 0;border-bottom:1px solid var(--line);vertical-align:top}
+td.val{font-weight:500;white-space:nowrap}
+.tablewrap{overflow-x:auto}
+.dl{display:flex;flex-wrap:wrap;gap:8px}
+.dl a{text-decoration:none}
+.repl{border-color:var(--warn)}
+.quote{display:none;flex-direction:column;gap:10px}
+.quote.open{display:flex}
+.quote label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--ink-2)}
+.quote input{height:40px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--page);color:var(--ink)}
+.quote .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:480px){.quote .row{grid-template-columns:1fr}}
+.sent{padding:12px;border-radius:8px;background:var(--tint);font-size:14px}
+.state{padding:40px 0;color:var(--ink-2);text-align:center}
+.err{color:var(--crit)}
+footer{border-top:1px solid var(--line);padding-block:20px;font-size:12px;color:var(--ink-2)}
+@media (prefers-reduced-motion:no-preference){.item,.fam{transition:border-color .15s}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand" id="brand" role="link" tabindex="0"><b>Hailtools</b><span>Catálogo Sandvik Coromant · protótipo</span></div>
+    <form class="search" id="searchForm" role="search">
+      <input id="q" type="search" placeholder="Código, descrição ou aplicação — ex.: CNMG 12 04 08-PM 4425" autocomplete="off" aria-label="Buscar produto">
+      <button type="submit">Buscar</button>
+    </form>
+  </div>
+</header>
+
+<main class="wrap" id="view"></main>
+
+<footer class="wrap">Dados técnicos, imagens e modelos CAD: Sandvik Coromant (Master Data File CoroPak 26.1). Protótipo lendo o Acervo Técnico Hailtools em tempo real. Preço somente nos itens já disponíveis na loja hailtools.com.br; demais itens sob cotação.</footer>
+
+<script>
+const SB_URL = "https://fthgudqfiiwyqoolcjgl.supabase.co/rest/v1/rpc/";
+const SB_KEY = "sb_publishable_yVk3RKhFHLHQCj4drZ8-sg_csn7hNz4";
+const WIX_BASE = "https://www.hailtools.com.br/product-page/";
+const QUOTE_MAIL = "hailtools@hailtools.com.br";
+const PAGE = 24;
+
+const FAMILIES = [
+  {key:"Pastilha", label:"Pastilhas", hint:"Torneamento, fresamento, furação, canal e corte"},
+  {key:"Item da ferramenta", label:"Ferramentas", hint:"Fresas, brocas, suportes, machos, alargadores"},
+  {key:"Item de adaptação", label:"Adaptação", hint:"Coromant Capto, mandris, cones, prolongadores"},
+  {key:"Item de montagem", label:"Montagem", hint:"Parafusos, chaves, calços, grampos"},
+  {key:"Item acessório", label:"Acessórios", hint:"Acessórios e itens de reposição"},
+  {key:"Kit", label:"Kits", hint:"Kits e conjuntos"},
+  {key:"Blank", label:"Blanks", hint:"Blanks de metal duro"}
+];
+const FACETS = [
+  {key:"GRADE", label:"Classe"},
+  {key:"CTPT", label:"Tipo de operação"},
+  {key:"TMC1_PRIMARY", label:"Material ISO (principal)"},
+  {key:"HAND", label:"Sentido"},
+  {key:"CUTINT_SIZESHAPE", label:"Tamanho e forma da pastilha"}
+];
+const MEDIA_LABEL = {pict_3d:"Foto", draw_char:"Desenho dimensional", draw_char2:"Desenho dimensional 2", draw_detail:"Detalhe", expl_view:"Vista explodida", funct:"Função"};
+const VALUE_PT = {finishing:"Acabamento", medium:"Médio", roughing:"Desbaste", Neutral:"Neutro", Right:"Direita", Left:"Esquerda", "true":"Sim", "false":"Não"};
+
+const view = document.getElementById("view");
+const qInput = document.getElementById("q");
+let state = {q:"", family:null, attrs:{}, highlighted:false, page:0};
+
+async function rpc(name, body){
+  const r = await fetch(SB_URL + name, {method:"POST", headers:{apikey:SB_KEY, Authorization:"Bearer "+SB_KEY, "Content-Type":"application/json"}, body:JSON.stringify(body)});
+  if(!r.ok) throw new Error("API " + r.status + ": " + (await r.text()).slice(0,200));
+  return r.json();
+}
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmtVal = v => (v === null || v === undefined) ? "—" : (typeof v === "number" ? v.toLocaleString("pt-BR") : (VALUE_PT[v] || String(v)));
+const label = t => { t = String(t||"").replace(/\s+(m[ée]trica|metric)\s*$/i, "").trim(); return t ? t[0].toUpperCase() + t.slice(1) : t; };
+const compact = code => String(code||"").replace(/[\s\-.]/g,"");
+const wixUrl = p => p.wix_slug ? WIX_BASE + p.wix_slug : "https://www.hailtools.com.br/";
+
+/* ---------- routing ---------- */
+function go(hash){ location.hash = hash; }
+function route(){
+  const h = location.hash.replace(/^#\/?/, "");
+  if(h.startsWith("p/")) return renderProduct(decodeURIComponent(h.slice(2)));
+  if(h.startsWith("s/")){
+    try{ state = Object.assign({q:"",family:null,attrs:{},highlighted:false,page:0}, JSON.parse(decodeURIComponent(h.slice(2)))); }catch(e){ state = {q:"",family:null,attrs:{},highlighted:false,page:0}; }
+    qInput.value = state.q || "";
+    return renderResults();
+  }
+  qInput.value = "";
+  renderHome();
+}
+function pushSearch(patch){
+  state = Object.assign({}, state, patch);
+  if(!("page" in patch)) state.page = 0;
+  go("/s/" + encodeURIComponent(JSON.stringify(state)));
+}
+window.addEventListener("hashchange", route);
+document.getElementById("searchForm").addEventListener("submit", e => { e.preventDefault(); pushSearch({q:qInput.value.trim(), family:null, attrs:{}, page:0}); });
+document.getElementById("brand").addEventListener("click", () => go("/"));
+document.getElementById("brand").addEventListener("keydown", e => { if(e.key==="Enter") go("/"); });
+
+/* ---------- home ---------- */
+async function renderHome(){
+  view.innerHTML = `
+  <section class="hero">
+    <div class="eyebrow">Distribuidor autorizado Sandvik Coromant</div>
+    <h1>Todo o catálogo Sandvik Coromant, com dados técnicos, desenhos e modelos 3D</h1>
+    <p class="muted">Busque pelo código com ou sem espaços, pela descrição ou pela aplicação. Cada produto traz a ficha técnica ISO 13399, desenho dimensional, STP e DXF para download e os itens inclusos na embalagem.</p>
+    <div class="fams" id="fams">${FAMILIES.map(f => `<button class="fam" data-fam="${esc(f.key)}"><b>${esc(f.label)}</b><span class="muted" style="font-size:13px">${esc(f.hint)}</span><span class="n mono" data-n>…</span></button>`).join("")}</div>
+    <div class="examples"><span class="muted" style="font-size:13px">Experimente:</span>
+      ${["CNMG 12 04 08-PM 4425","R390-11 T3 08M-PM 1130","880-D2000L25-03","CoroMill 390","Silent Tools"].map(s => `<button class="chip" data-ex="${esc(s)}">${esc(s)}</button>`).join("")}
+    </div>
+    <div class="note">Protótipo navegável para avaliação interna. Preço aparece apenas nos itens já cadastrados na loja hailtools.com.br; os demais têm botão de cotação. Rótulos técnicos ainda em português de Portugal (revisão pt-BR pendente).</div>
+  </section>`;
+  view.querySelectorAll("[data-fam]").forEach(b => b.addEventListener("click", () => pushSearch({q:"", family:b.dataset.fam, attrs:{}, page:0})));
+  view.querySelectorAll("[data-ex]").forEach(b => b.addEventListener("click", () => { qInput.value = b.dataset.ex; pushSearch({q:b.dataset.ex, family:null, attrs:{}, page:0}); }));
+  // contagens por família
+  FAMILIES.forEach(async f => {
+    try{ const r = await rpc("sandvik_search", {q:null, p_family:f.key, p_limit:1}); const el = view.querySelector(`[data-fam="${CSS.escape(f.key)}"] [data-n]`); if(el) el.textContent = (r[0]?.total || 0).toLocaleString("pt-BR") + " itens"; }catch(e){}
+  });
+}
+
+/* ---------- results ---------- */
+async function renderResults(){
+  const s = state;
+  const famLabel = FAMILIES.find(f => f.key === s.family)?.label;
+  view.innerHTML = `<section class="results">
+    <aside class="filters" id="filters">
+      <div class="fgroup"><div class="eyebrow">Família</div><div class="chips">${FAMILIES.map(f => `<button class="chip ${s.family===f.key?"on":""}" data-fam="${esc(f.key)}">${esc(f.label)}</button>`).join("")}</div></div>
+      <div class="fgroup"><div class="eyebrow">Sortimento</div><div class="chips"><button class="chip ${s.highlighted?"on":""}" id="hl">Recomendado para estoque</button></div></div>
+      <div id="facets"></div>
+    </aside>
+    <div>
+      <div class="summary"><h2 id="sumTitle">${s.q ? `Resultados para “${esc(s.q)}”` : (famLabel || "Catálogo completo")}</h2><span class="muted mono" id="sumCount">buscando…</span></div>
+      <div class="active-filters" id="active"></div>
+      <div class="list" id="list"><div class="state">Consultando o acervo…</div></div>
+      <div class="pager" id="pager"></div>
+    </div></section>`;
+  view.querySelectorAll("[data-fam]").forEach(b => b.addEventListener("click", () => pushSearch({family: s.family===b.dataset.fam ? null : b.dataset.fam, attrs:{}})));
+  view.querySelector("#hl").addEventListener("click", () => pushSearch({highlighted:!s.highlighted}));
+
+  const active = view.querySelector("#active");
+  Object.entries(s.attrs).forEach(([k,v]) => {
+    const f = FACETS.find(x => x.key===k);
+    const b = document.createElement("button"); b.className = "chip on"; b.innerHTML = `${esc(f?f.label:k)}: ${esc(fmtVal(v))} ✕`;
+    b.addEventListener("click", () => { const a = Object.assign({}, s.attrs); delete a[k]; pushSearch({attrs:a}); });
+    active.appendChild(b);
+  });
+
+  const body = {q: s.q || null, p_family: s.family, p_attrs: s.attrs, p_highlighted: !!s.highlighted, p_limit: PAGE, p_offset: s.page*PAGE};
+  try{
+    const rows = await rpc("sandvik_search", body);
+    const total = rows[0]?.total || 0;
+    view.querySelector("#sumCount").textContent = total.toLocaleString("pt-BR") + (total===1?" item":" itens");
+    const list = view.querySelector("#list");
+    if(!rows.length){ list.innerHTML = `<div class="state">Nenhum item encontrado. Confira o código ou tente uma descrição (ex.: “pastilha torneamento”).</div>`; }
+    else list.innerHTML = rows.map(itemCard).join("");
+    const pager = view.querySelector("#pager"); pager.innerHTML = "";
+    if(total > PAGE){
+      const pages = Math.ceil(total/PAGE);
+      pager.innerHTML = `<button class="btn small" id="prev" ${s.page===0?"disabled":""}>Anterior</button><span class="muted mono" style="align-self:center">${s.page+1} / ${pages}</span><button class="btn small" id="next" ${s.page>=pages-1?"disabled":""}>Próxima</button>`;
+      pager.querySelector("#prev").addEventListener("click", () => pushSearch({page:s.page-1}));
+      pager.querySelector("#next").addEventListener("click", () => pushSearch({page:s.page+1}));
+    }
+  }catch(e){ view.querySelector("#list").innerHTML = `<div class="state err">Não foi possível consultar o acervo. ${esc(e.message)}</div>`; }
+
+  // facetas em paralelo
+  const facetsEl = view.querySelector("#facets");
+  const results = await Promise.all(FACETS.map(f => rpc("sandvik_facet", {p_key:f.key, q: s.q||null, p_family:s.family, p_attrs:s.attrs, p_highlighted:!!s.highlighted, p_limit:8}).catch(() => [])));
+  facetsEl.innerHTML = FACETS.map((f,i) => {
+    const vals = results[i]; if(!vals.length || (vals.length===1 && s.attrs[f.key]!==undefined)) return "";
+    return `<div class="fgroup"><div class="eyebrow">${esc(f.label)}</div><div class="chips">${vals.map(v => `<button class="chip ${String(s.attrs[f.key])===String(v.value)?"on":""}" data-fk="${esc(f.key)}" data-fv="${esc(v.value)}">${esc(fmtVal(v.value))} <span class="cnt mono">${Number(v.n).toLocaleString("pt-BR")}</span></button>`).join("")}</div></div>`;
+  }).join("");
+  facetsEl.querySelectorAll("[data-fk]").forEach(b => b.addEventListener("click", () => {
+    const a = Object.assign({}, s.attrs);
+    if(String(a[b.dataset.fk]) === b.dataset.fv) delete a[b.dataset.fk]; else a[b.dataset.fk] = b.dataset.fv;
+    pushSearch({attrs:a});
+  }));
+}
+function statusTags(p){
+  const t = [];
+  if(p.has_price) t.push(`<span class="tag price">Preço na loja</span>`);
+  else t.push(`<span class="tag">Sob cotação</span>`);
+  if(p.lcs_code === 30) t.push(`<span class="tag warn">Em descontinuação</span>`);
+  if(p.stock_code === 2) t.push(`<span class="tag">Sob encomenda na Sandvik</span>`);
+  if(p.highlighted) t.push(`<span class="tag ok">Recomendado</span>`);
+  return t.join("");
+}
+function itemCard(p){
+  const img = p.pict_url ? `<img loading="lazy" src="${esc(p.pict_url)}" alt="">` : `<span>sem foto</span>`;
+  return `<a class="item" href="#/p/${encodeURIComponent(p.material_id)}">
+    <div class="thumb ${p.pict_url?"":"empty"}">${img}</div>
+    <div><div class="code mono">${esc(p.ordering_code)}</div><div class="desc">${esc(p.description_pt || p.family || "")}</div>
+    <div class="muted" style="font-size:12px">${esc(p.family_l1 || "")}${p.family_l2?" · "+esc(p.family_l2):""}${p.tpc_name?" · "+esc(p.tpc_name):""}</div>
+    <div class="tags">${statusTags(p)}</div></div></a>`;
+}
+
+/* ---------- product ---------- */
+async function renderProduct(id){
+  view.innerHTML = `<div class="state">Carregando produto…</div>`;
+  let d;
+  try{ d = await rpc("sandvik_product_full", {p_material_id:id}); }catch(e){ view.innerHTML = `<div class="state err">${esc(e.message)}</div>`; return; }
+  if(!d || !d.product){ view.innerHTML = `<div class="state">Produto não encontrado.</div>`; return; }
+  const p = d.product, m = d.media || {}, attrs = d.attributes || [], bom = d.bom || [];
+  const gal = Object.keys(MEDIA_LABEL).filter(k => m[k]);
+  const firstImg = gal[0];
+  const grade = p.attrs?.GRADE;
+  const famLabel = FAMILIES.find(f => f.key === p.family_l1)?.label || p.family_l1 || "";
+  const backSearch = `#/s/${encodeURIComponent(JSON.stringify(Object.assign({}, state, {page:0})))}`;
+
+  const kv = [
+    ["Código Sandvik", `<span class="mono">${esc(p.ordering_code)}</span>`],
+    ["Código compactado", `<span class="mono">${esc(p.ordering_code_packed || compact(p.ordering_code))}</span>`],
+    ["Material ID", `<span class="mono">${esc(p.material_id)}</span>`],
+    ["Família", esc(p.family || "—")],
+    ["Tipo de produto", esc(p.tpc_name || "—")],
+    grade ? ["Classe", `<span class="mono">${esc(grade)}</span>`] : null,
+    p.coating_type ? ["Revestimento", esc(p.coating_process || "") + (p.coating_type ? " · " + esc(p.coating_type) : "")] : null,
+    p.substrate_type ? ["Substrato", esc(p.substrate_type)] : null,
+    ["Situação", p.lcs_code === 30 ? "Em descontinuação" : "Em linha"],
+    ["Disponibilidade Sandvik", p.stock_code === 1 ? "Item de estoque" : "Sob encomenda"],
+    ["Quantidade mínima", `<span class="mono">${fmtVal(p.min_order_qty)}</span>`],
+    ["Embalagem", `<span class="mono">${fmtVal(p.package_qty)}</span> un.`],
+    ["Peso", esc(p.weight_item || "—")],
+    ["EAN", `<span class="mono">${esc(p.ean || "—")}</span>`],
+    ["NCM (HS)", `<span class="mono">${esc(p.hs_code || "—")}</span>`],
+    ["Lançamento", p.release_date ? new Date(p.release_date + "T00:00:00").toLocaleDateString("pt-BR") : "—"],
+    ["Origem", esc(p.country_of_origin || "—")]
+  ].filter(Boolean);
+
+  view.innerHTML = `
+  <nav class="crumbs"><a href="#/">Catálogo</a><span>›</span><a href="${backSearch}">${esc(famLabel || "Busca")}</a><span>›</span><span class="mono">${esc(p.ordering_code)}</span></nav>
+  <section class="product">
+    <div class="gallery">
+      <div class="main" id="mainImg">${firstImg ? `<img src="${esc(m[firstImg].url)}" alt="${esc(p.ordering_code)}">` : `<span class="muted">Sem imagem</span>`}</div>
+      <div class="cap" id="cap">${firstImg ? esc(MEDIA_LABEL[firstImg]) : ""}</div>
+      <div class="thumbs">${gal.map((k,i) => `<button data-g="${k}" class="${i===0?"on":""}" title="${esc(MEDIA_LABEL[k])}"><img loading="lazy" src="${esc(m[k].url)}" alt="${esc(MEDIA_LABEL[k])}"></button>`).join("")}</div>
+      <div class="card"><h3>Arquivos CAD</h3>
+        <div class="dl">
+          ${m.stp_basic ? `<a class="btn small" href="${esc(m.stp_basic.url)}" target="_blank" rel="noopener">3D básico (.stp)</a>` : ""}
+          ${m.stp_detail ? `<a class="btn small" href="${esc(m.stp_detail.url)}" target="_blank" rel="noopener">3D detalhado (.stp)</a>` : ""}
+          ${m.dxf_2d ? `<a class="btn small" href="${esc(m.dxf_2d.url)}" target="_blank" rel="noopener">2D montagem (.dxf)</a>` : ""}
+          ${(!m.stp_basic && !m.stp_detail && !m.dxf_2d) ? `<span class="muted" style="font-size:13px">Sem modelo CAD disponível para este item.</span>` : ""}
+        </div>
+        <div class="muted" style="font-size:12px">Ver em realidade aumentada: previsto para a próxima fase (depende de conversão dos modelos e autorização Sandvik).</div>
+      </div>
+    </div>
+    <div class="pinfo">
+      <div class="ptitle"><div class="eyebrow">${esc(famLabel)}${p.family_l2?" · "+esc(p.family_l2):""}</div>
+        <h1 class="mono">${esc(p.ordering_code)}</h1>
+        <p class="muted" style="margin:6px 0 0">${esc(p.description_pt || p.description_en || "")}</p>
+        <div class="tags">${statusTags(p)}</div></div>
+      <div class="cta" id="cta">
+        ${p.has_price
+          ? `<a class="btn primary" href="${esc(wixUrl(p))}" target="_blank" rel="noopener">Comprar na loja</a><span class="stock">Preço e estoque Hailtools na página da loja.</span>`
+          : `<button class="btn primary" id="quoteBtn">Solicitar cotação</button><span class="stock">Resposta da equipe técnica Hailtools com preço e prazo.</span>`}
+      </div>
+      <form class="quote card" id="quote">
+        <h3>Solicitar cotação</h3>
+        <div class="row"><label>Código<input id="qcode" value="${esc(p.ordering_code)}" readonly></label><label>Quantidade<input id="qqty" type="number" min="1" value="${esc(p.min_order_qty || 1)}"></label></div>
+        <div class="row"><label>Empresa<input id="qco" required placeholder="Razão social"></label><label>Cidade / UF<input id="qcity" placeholder="Ex.: Serra / ES"></label></div>
+        <div class="row"><label>E-mail<input id="qmail" type="email" required placeholder="nome@empresa.com.br"></label><label>Telefone / WhatsApp<input id="qtel" placeholder="(27) 9…"></label></div>
+        <label>Aplicação (opcional)<input id="qapp" placeholder="Material, operação, máquina"></label>
+        <div class="cta"><button class="btn" type="submit">Enviar pedido de cotação</button><button class="btn small" type="button" id="quoteCancel">Cancelar</button></div>
+        <div class="sent hidden" id="sent"></div>
+      </form>
+      ${p.replacement_material_id ? `<div class="card repl"><h3>Produto substituto indicado pela Sandvik</h3><div><a href="#/p/${encodeURIComponent(p.replacement_material_id)}" class="mono">${esc(p.replacement_ordering_code || p.replacement_material_id)}</a> — ${esc(d.replacement?.description_pt || p.replacement_desc_pt || "")}</div></div>` : ""}
+      <div class="card"><h3>Dados principais</h3><dl class="kv">${kv.map(([k,v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl></div>
+      <div class="card"><h3>Ficha técnica (ISO 13399)</h3>
+        ${attrs.length ? `<div class="tablewrap"><table><thead><tr><th>Parâmetro</th><th>Código</th><th>Valor</th></tr></thead><tbody>${attrs.map(a => `<tr><td>${esc(label(a.label_pt || a.label_en || a.key))}</td><td class="muted mono">${esc(a.iso_code)}</td><td class="val mono">${fmtVal(a.value)}${a.unit ? " " + esc(a.unit) : ""}</td></tr>`).join("")}</tbody></table></div>` : `<span class="muted">Sem parâmetros técnicos cadastrados.</span>`}
+      </div>
+      ${bom.length ? `<div class="card"><h3>Itens na embalagem</h3><div class="tablewrap"><table><thead><tr><th>Código</th><th>Descrição</th><th>Qtde</th><th>Incluso</th></tr></thead><tbody>${bom.map(b => `<tr><td class="mono">${esc(b.code)}</td><td>${esc(b.description||"")}</td><td class="mono">${b.qty ?? "—"}</td><td>${b.included ? "Sim" : "Opcional"}</td></tr>`).join("")}</tbody></table></div></div>` : ""}
+    </div>
+  </section>`;
+
+  view.querySelectorAll("[data-g]").forEach(b => b.addEventListener("click", () => {
+    const k = b.dataset.g;
+    view.querySelector("#mainImg").innerHTML = `<img src="${esc(m[k].url)}" alt="${esc(MEDIA_LABEL[k])}">`;
+    view.querySelector("#cap").textContent = MEDIA_LABEL[k];
+    view.querySelectorAll("[data-g]").forEach(x => x.classList.toggle("on", x === b));
+  }));
+  const form = view.querySelector("#quote");
+  view.querySelector("#quoteBtn")?.addEventListener("click", () => { form.classList.add("open"); form.querySelector("#qco").focus(); form.scrollIntoView({behavior:"smooth", block:"nearest"}); });
+  view.querySelector("#quoteCancel").addEventListener("click", () => form.classList.remove("open"));
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const g = id => form.querySelector(id).value.trim();
+    const body = `Solicitação de cotação\nCódigo: ${g("#qcode")}\nMaterial ID: ${p.material_id}\nQuantidade: ${g("#qqty")}\nEmpresa: ${g("#qco")}\nCidade/UF: ${g("#qcity")}\nE-mail: ${g("#qmail")}\nTelefone: ${g("#qtel")}\nAplicação: ${g("#qapp")}\nOrigem: página do produto (protótipo)`;
+    const mail = `mailto:${QUOTE_MAIL}?subject=${encodeURIComponent("Cotação " + g("#qcode"))}&body=${encodeURIComponent(body)}`;
+    const sent = form.querySelector("#sent"); sent.classList.remove("hidden");
+    sent.innerHTML = `Pedido preparado. No site final, este envio cria um lead no Y-CRM com o código e a página de origem. Neste protótipo, ele abre seu e-mail: <a href="${mail}">enviar para ${QUOTE_MAIL}</a><pre style="white-space:pre-wrap;margin:8px 0 0;font:inherit">${esc(body)}</pre>`;
+  });
+  window.scrollTo({top:0});
+}
+
+route();
+</script>
+</body>
+</html>
